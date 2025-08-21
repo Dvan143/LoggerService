@@ -11,7 +11,7 @@ public class RabbitConsumer {
     @Autowired
     LoggingService loggingService;
 
-    @RabbitListener(queues = "logs")
+    @RabbitListener(queues = "log-queue")
     public void saveLogs(LogDto log) {
         loggingService.saveLog(log);
     }

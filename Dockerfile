@@ -1,5 +1,6 @@
-FROM openjdk:26-ea-9-jdk-bookworm
+FROM tomcat:11.0-jdk21-openjdk-bookworm
 
-COPY target/BankAppLoggingService-0.0.1-SNAPSHOT.jar LoggingService.jar
+COPY target/LoggingService-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+COPY server.xml /usr/local/tomcat/conf/server.xml
 
-ENTRYPOINT ["java", "-jar", "LoggingService.jar"]
+EXPOSE 7070

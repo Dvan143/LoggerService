@@ -3,16 +3,18 @@ package org.dmitriyprojects.bankapploggingservice.db;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
-@Document(indexName = "logs")
+@Document
 public class LogDocument {
     @Id
-    private Long id;
+    private String id;
     private String date;
     private String from;
     private String body;
@@ -22,8 +24,9 @@ public class LogDocument {
     }
 
     public LogDocument(String from, String body, String additionalInfo) {
-        LocalDateTime date = LocalDateTime.now();
-        this.date = date.toString();
+        ZonedDateTime currentTime = ZonedDateTime.now(ZoneId.of("UTC+3"));
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        this.date = currentTime.format(date);
 
         this.from = from;
         this.body = body;
